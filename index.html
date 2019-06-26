@@ -33,6 +33,12 @@
   }
   .msg .ScratchTitle{
    float:right;
+   width:30vw;
+   height: 16.67vw;
+   overflow: hidden;
+   background: url('./images/donghua.gif') 0 0 no-repeat;
+   background-size: contain;
+   box-shadow: 0 0 4px 2px #fff;
   }
   #main {
    background: url('./images/homeBg.jpg') 0 0 no-repeat;
@@ -63,14 +69,6 @@
   }
   #main h2>p span {
    padding: 0 1.33vw;
-  }
-  .ScratchTitle{
-   width:30vw;
-   height: 16.67vw;
-   overflow: hidden;
-   background: url('./images/donghua.gif') 0 0 no-repeat;
-   background-size: contain;
-   box-shadow: 0 0 4px 2px #fff;
   }
   .ScratchTitle img {
    width: 100%;
@@ -141,40 +139,47 @@
   var canvas = document.getElementById('canvasTop');
   var canvasBotm = document.getElementById('canvasBotm');
   var demo = document.getElementsByClassName('demo')[0];
-  var ratio = canvas.offsetWidth/canvas.width;
   var EraseArea = 0;
   var AllArea = 0;
   // 表面层设置透明背景
   canvas.style.backgroundColor = 'transparent';
   canvas.style.width = '86.67vw';
   canvas.style.height = '30vw';
-  canvas.width = demo.offsetWidth
-  canvas.height = demo.offsetHeight
   AllArea = demo.offsetWidth*demo.offsetHeight
   canvasBotm.style.backgroundColor = '#f3f3f3'; //验证码背景色 
   canvasBotm.style.width = '86.67vw';
   canvasBotm.style.height = '30vw';
+  // 设置canvas画布的大小等于canvas元素的大小，这里不设置相等会导致在擦除涂层时出现偏差
+  canvas.width = demo.offsetWidth
+  canvas.height = demo.offsetHeight
   canvasBotm.width = demo.offsetWidth
   canvasBotm.height = demo.offsetHeight
 
-  // 设置表层的视觉效果
+  // 设置底层的刮奖后视觉效果（随机展示奖项图片）
   var num = Math.floor(Math.random() * 10);
   img.src = "./images/award" + num + ".jpg";
+  // 设置表层的视觉效果
   innerImg.src = "./images/guawo.jpg"
 
 
   img.addEventListener('load', function (e) {
    var ctx;
-    var w = canvas.width,h = canvas.height;
+   var w = canvas.width,h = canvas.height;
+   // 获取canvas区域距离可视区域顶部和左侧的距离（为了后面计算擦除点在画布中的坐标）
    var offsetX = demo.offsetLeft,
     offsetY = demo.offsetTop;
    var mousedown = false;
-   //函数layer()用来绘制一个灰色的正方形 
+   //函数layer()用来绘制最上面一层图案，可以设置纯色 
    function layer(ctx) {
+    // 绘制图片图案
     ctx.drawImage(innerImg,0,0,w,h)
+    // 绘制纯色图案
+    // ctx.fillStyle = 'gray';
+    // ctx.rect(0, 0, w, h);
+    // ctx.fill();
    }
    function layerBotm(ctxBotm) {
-    ctxBotm.fillStyle = 'grey';
+    ctxBotm.fillStyle = 'gray';
     ctxBotm.fillRect(0, 0, w, h);
    }
    //定义了按下事件 
@@ -186,21 +191,23 @@
    function eventUp(e) {
     e.preventDefault();
     mousedown = false;
+    // 刮去的面积除以总面积大于2（由于擦除的圆用许多重叠部分）清除全部
     if (EraseArea/AllArea>2) {
      ctx.clearRect(0, 0, w, h);
     }
    }
    //定义了移动事件 
    function eventMove(e) {
-    console.log(e)
     e.preventDefault();
     if (mousedown) {     //当按下时，获取坐标位移，并通过arc(x, y, 10, 0, Math.PI * 2)来绘制小圆点 
      if (e.changedTouches) {
       e = e.changedTouches[e.changedTouches.length - 1];
      }
+     // 此处页面超出出现滚动条时应该用document.documentElement.scrollTop获取不可以用document.body.scrollTop
      var x = (e.clientX + document.documentElement.scrollLeft || e.pageX) - offsetX || 0,
       y = (e.clientY + document.documentElement.scrollTop || e.pageY) - offsetY || 0;
      with (ctx) {
+      // 计算累计刮开的面积（不准确）
       EraseArea += Math.PI*10*10
       beginPath()
       arc(x, y, 10, 0, Math.PI * 2);
@@ -231,7 +238,7 @@
 
    layerBotm(ctxBotm);
    layer(ctx);
-
+   // 原有内容中与新图形不重叠的部分会被保留
    ctx.globalCompositeOperation = 'destination-out';
 
    canvas.addEventListener('touchstart', eventDown);
