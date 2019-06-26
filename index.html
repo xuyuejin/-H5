@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>刮刮卡</title>
+ <link rel="stylesheet" type="text/css" href="" />
+ <style type="text/css">
+ body,html {
+  width: 100%;
+  height: 100%;
+ }
+ body,html,h2{
+  padding: 0;
+  margin: 0;
+ }
+  .demo {
+   width: 86.67vw;
+   min-height: 30vw;
+  }
+  .msg {
+   height: 16.67vw;
+   padding: 4vw 16vw;
+  }
+  .msg span{
+   height: 16.67vw;
+   line-height: 16.67vw;
+   float: left;
+   font-size: 4.33vw;
+   color: #fff;
+  }
+  .msg .ScratchTitle{
+   float:right;
+  }
+  #main {
+   background: url('./images/homeBg.jpg') 0 0 no-repeat;
+   background-size: cover;
+   min-height: 100%;
+  }
+  #main h2{
+   text-align: center;
+   font-size: 4.27vw;
+   color: #fff;
+   line-height: 10.67vw;
+  }
+  #main h2>img {
+   width: 86.67vw;
+   display: block;
+   margin: 0 auto;
+  }
+  #main h2>p {
+   background: url('./images/fontBg.png') 0 0 no-repeat;
+   background-size: contain;
+   width: 42.26vw;
+   margin: 0 auto;
+   height: 6.67vw;
+   line-height: 6.67vw;
+   color: #fbe93d;
+   font-size: 3.2vw;
+
+  }
+  #main h2>p span {
+   padding: 0 1.33vw;
+  }
+  .ScratchTitle{
+   width:30vw;
+   height: 16.67vw;
+   overflow: hidden;
+   background: url('./images/donghua.gif') 0 0 no-repeat;
+   background-size: contain;
+   box-shadow: 0 0 4px 2px #fff;
+  }
+  .ScratchTitle img {
+   width: 100%;
+   background: #d12329;
+  }
+  .bottomContent{
+   line-height: 13.33vw;
+   text-align: center;
+   font-size: 3.73vw;
+   color: #fff;
+   background: rgba(0,0,0,.5);
+   margin-top: 16vw;
+  }
+  .bottomContent span {
+   font-size: 4.33vw;
+   color: #fbe93d;
+   padding: 0 1.33vw;
+  }
+  .bottomContent a {
+   color: #fbe93d;
+   text-decoration: none;
+   font-size: 4.8vw;
+   padding-left: 2.66vw;
+  }
+  #canvasTop {
+   position: absolute;
+  }
+  #canvasBotm {
+   position: absolute;
+  }
+  .demoOuter{
+   padding: 5px 10px;
+   margin: 2vw auto 0;
+   width: 86.67vw;
+   min-height: 30vw;
+   background: url('./images/guawoBg.png') 0 0 no-repeat;
+   background-size: 100%;
+  }
+ </style>
+</head>
+
+<body>
+ <div id="main">
+  <h2>
+   <img src="./images/title.png" alt="">
+   <p>已有<span>1314</span>人参与</p>
+  </h2>
+  <div class="msg"><span>刮开图层部分看看</span><div class="ScratchTitle"></div></div>
+  <div class="demoOuter">
+  <div class="demo">
+   <canvas id="canvasBotm"></canvas>
+   <canvas id="canvasTop"></canvas>
+  </div>
+ </div>
+  <p class="bottomContent">您还有<span>3次</span>机会<a href="javascript:void(0)" onClick="window.location.reload()">再来一次</a></p>
+ </div>
+
+ <script type="text/javascript">
+
+  //禁用页面的鼠标选中拖动的事件 
+  var bodyStyle = document.body.style;
+  bodyStyle.mozUserSelect = 'none';
+  bodyStyle.webkitUserSelect = 'none';
+
+  //定义图片类，获取canvas元素，并设置背景和位置属性 
+  var img = new Image();
+  var innerImg = new Image();
+  var canvas = document.getElementById('canvasTop');
+  var canvasBotm = document.getElementById('canvasBotm');
+  var demo = document.getElementsByClassName('demo')[0];
+  var ratio = canvas.offsetWidth/canvas.width;
+  var EraseArea = 0;
+  var AllArea = 0;
+  // 表面层设置透明背景
+  canvas.style.backgroundColor = 'transparent';
+  canvas.style.width = '86.67vw';
+  canvas.style.height = '30vw';
+  canvas.width = demo.offsetWidth
+  canvas.height = demo.offsetHeight
+  AllArea = demo.offsetWidth*demo.offsetHeight
+  canvasBotm.style.backgroundColor = '#f3f3f3'; //验证码背景色 
+  canvasBotm.style.width = '86.67vw';
+  canvasBotm.style.height = '30vw';
+  canvasBotm.width = demo.offsetWidth
+  canvasBotm.height = demo.offsetHeight
+
+  // 设置表层的视觉效果
+  var num = Math.floor(Math.random() * 10);
+  img.src = "./images/award" + num + ".jpg";
+  innerImg.src = "./images/guawo.jpg"
+
+
+  img.addEventListener('load', function (e) {
+   var ctx;
+    var w = canvas.width,h = canvas.height;
+   var offsetX = demo.offsetLeft,
+    offsetY = demo.offsetTop;
+   var mousedown = false;
+   //函数layer()用来绘制一个灰色的正方形 
+   function layer(ctx) {
+    ctx.drawImage(innerImg,0,0,w,h)
+   }
+   function layerBotm(ctxBotm) {
+    ctxBotm.fillStyle = 'grey';
+    ctxBotm.fillRect(0, 0, w, h);
+   }
+   //定义了按下事件 
+   function eventDown(e) {
+    e.preventDefault();
+    mousedown = true;
+   }
+   //定义了松开事件 
+   function eventUp(e) {
+    e.preventDefault();
+    mousedown = false;
+    if (EraseArea/AllArea>2) {
+     ctx.clearRect(0, 0, w, h);
+    }
+   }
+   //定义了移动事件 
+   function eventMove(e) {
+    console.log(e)
+    e.preventDefault();
+    if (mousedown) {     //当按下时，获取坐标位移，并通过arc(x, y, 10, 0, Math.PI * 2)来绘制小圆点 
+     if (e.changedTouches) {
+      e = e.changedTouches[e.changedTouches.length - 1];
+     }
+     var x = (e.clientX + document.documentElement.scrollLeft || e.pageX) - offsetX || 0,
+      y = (e.clientY + document.documentElement.scrollTop || e.pageY) - offsetY || 0;
+     with (ctx) {
+      EraseArea += Math.PI*10*10
+      beginPath()
+      arc(x, y, 10, 0, Math.PI * 2);
+      fill();
+     }
+    }
+   }
+
+   //通过canvas调用以上函数，绘制图形，并且侦听触控及鼠标事件，调用相应的函数 
+   canvasBotm.style.background='url('+img.src+') 0 0 no-repeat'; 
+   canvasBotm.style.backgroundSize='100% 100%'; 
+
+   ctxBotm = canvas.getContext("2d");
+   ctx = canvasBotm.getContext("2d");
+   ctx.font = "50px Arial";
+
+   //实习字体 
+   // 绘制中奖区域文字内容
+   // ctx.fillStyle = '#fff';
+   // ctx.textAlign = "center";
+   // ctx.textBaseline = "middle";
+   // ctx.fillText('一等奖', canvas.width/2, canvas.height/2);
+
+
+   ctx = canvas.getContext('2d');
+   ctx.fillStyle = 'transparent';
+   ctx.fillRect(0, 0, w, h);
+
+   layerBotm(ctxBotm);
+   layer(ctx);
+
+   ctx.globalCompositeOperation = 'destination-out';
+
+   canvas.addEventListener('touchstart', eventDown);
+   canvas.addEventListener('touchend', eventUp);
+   canvas.addEventListener('touchmove', eventMove);
+   canvas.addEventListener('mousedown', eventDown);
+   canvas.addEventListener('mouseup', eventUp);
+   canvas.addEventListener('mousemove', eventMove);
+  }); 
+ </script>
+</body>
+
+</html>
