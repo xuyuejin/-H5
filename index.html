@@ -2,253 +2,574 @@
 <html>
 
 <head>
- <meta charset="utf-8">
- <meta http-equiv="X-UA-Compatible" content="IE=edge">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <title>刮刮卡</title>
- <link rel="stylesheet" type="text/css" href="" />
- <style type="text/css">
- body,html {
-  width: 100%;
-  height: 100%;
- }
- body,html,h2{
-  padding: 0;
-  margin: 0;
- }
-  .demo {
-   width: 86.67vw;
-   min-height: 30vw;
-  }
-  .msg {
-   height: 16.67vw;
-   padding: 4vw 16vw;
-  }
-  .msg span{
-   height: 16.67vw;
-   line-height: 16.67vw;
-   float: left;
-   font-size: 4.33vw;
-   color: #fff;
-  }
-  .msg .ScratchTitle{
-   float:right;
-   width:30vw;
-   height: 16.67vw;
-   overflow: hidden;
-   background: url('./images/donghua.gif') 0 0 no-repeat;
-   background-size: contain;
-   box-shadow: 0 0 4px 2px #fff;
-  }
-  #main {
-   background: url('./images/homeBg.jpg') 0 0 no-repeat;
-   background-size: cover;
-   min-height: 100%;
-  }
-  #main h2{
-   text-align: center;
-   font-size: 4.27vw;
-   color: #fff;
-   line-height: 10.67vw;
-  }
-  #main h2>img {
-   width: 86.67vw;
-   display: block;
-   margin: 0 auto;
-  }
-  #main h2>p {
-   background: url('./images/fontBg.png') 0 0 no-repeat;
-   background-size: contain;
-   width: 42.26vw;
-   margin: 0 auto;
-   height: 6.67vw;
-   line-height: 6.67vw;
-   color: #fbe93d;
-   font-size: 3.2vw;
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>刮刮卡</title>
+  <link rel="stylesheet" type="text/css" href="" />
+  <style type="text/css">
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+    }
 
-  }
-  #main h2>p span {
-   padding: 0 1.33vw;
-  }
-  .ScratchTitle img {
-   width: 100%;
-   background: #d12329;
-  }
-  .bottomContent{
-   line-height: 13.33vw;
-   text-align: center;
-   font-size: 3.73vw;
-   color: #fff;
-   background: rgba(0,0,0,.5);
-   margin-top: 16vw;
-  }
-  .bottomContent span {
-   font-size: 4.33vw;
-   color: #fbe93d;
-   padding: 0 1.33vw;
-  }
-  .bottomContent a {
-   color: #fbe93d;
-   text-decoration: none;
-   font-size: 4.8vw;
-   padding-left: 2.66vw;
-  }
-  #canvasTop {
-   position: absolute;
-  }
-  #canvasBotm {
-   position: absolute;
-  }
-  .demoOuter{
-   padding: 5px 10px;
-   margin: 2vw auto 0;
-   width: 86.67vw;
-   min-height: 30vw;
-   background: url('./images/guawoBg.png') 0 0 no-repeat;
-   background-size: 100%;
-  }
- </style>
+    @font-face {
+      font-family: 'iconfont';
+      /* project id 1265358 */
+      src: url('//at.alicdn.com/t/font_1265358_audnwqixn4w.eot');
+      src: url('//at.alicdn.com/t/font_1265358_audnwqixn4w.eot?#iefix') format('embedded-opentype'),
+        url('//at.alicdn.com/t/font_1265358_audnwqixn4w.woff2') format('woff2'),
+        url('//at.alicdn.com/t/font_1265358_audnwqixn4w.woff') format('woff'),
+        url('//at.alicdn.com/t/font_1265358_audnwqixn4w.ttf') format('truetype'),
+        url('//at.alicdn.com/t/font_1265358_audnwqixn4w.svg#iconfont') format('svg');
+    }
+
+    .iconfont {
+      font-family: "iconfont" !important;
+      font-size: 16px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-stroke-width: 0.2px;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body,
+    html,
+    h2,
+    h3,
+    h4,
+    ul,
+    li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .demo {
+      width: 86.67vw;
+      min-height: 30vw;
+    }
+
+    .msg {
+      height: 16.67vw;
+      padding: 4vw 16vw;
+    }
+
+    .msg span {
+      height: 16.67vw;
+      line-height: 16.67vw;
+      float: left;
+      font-size: 4.33vw;
+      color: #fff;
+    }
+
+    .msg .ScratchTitle {
+      float: right;
+      width: 30vw;
+      height: 16.67vw;
+      overflow: hidden;
+      background: url('./images/donghua.gif') 0 0 no-repeat;
+      background-size: contain;
+      box-shadow: 0 0 4px 2px #fff;
+    }
+
+    #main {
+      background: url('./images/homeBg.jpg') 0 0 no-repeat;
+      background-size: cover;
+      min-height: 100%;
+    }
+
+    #main h2 {
+      text-align: center;
+      font-size: 4.27vw;
+      color: #fff;
+      line-height: 10.67vw;
+    }
+
+    #main h2>img {
+      width: 86.67vw;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #main h2>p {
+      background: url('./images/fontBg.png') 0 0 no-repeat;
+      background-size: contain;
+      width: 42.26vw;
+      margin: 0 auto;
+      height: 6.67vw;
+      line-height: 6.67vw;
+      color: #fbe93d;
+      font-size: 3.2vw;
+
+    }
+
+    #main h2>p span {
+      padding: 0 1.33vw;
+    }
+
+    .ScratchTitle img {
+      width: 100%;
+      background: #d12329;
+    }
+
+    .bottomContent {
+      line-height: 13.33vw;
+      text-align: center;
+      font-size: 3.73vw;
+      color: #fff;
+      background: rgba(0, 0, 0, .5);
+      margin-top: 16vw;
+    }
+
+    .bottomContent span {
+      font-size: 4.33vw;
+      color: #fbe93d;
+      padding: 0 1.33vw;
+    }
+
+    .bottomContent a {
+      color: #fbe93d;
+      text-decoration: none;
+      font-size: 4.8vw;
+      padding-left: 2.66vw;
+    }
+
+    #canvasTop {
+      position: absolute;
+    }
+
+    #canvasBotm {
+      position: absolute;
+    }
+
+    .demoOuter {
+      padding: 5px 10px;
+      margin: 2vw auto 0;
+      width: 86.67vw;
+      min-height: 30vw;
+      background: url('./images/guawoBg.png') 0 0 no-repeat;
+      background-size: 100%;
+    }
+
+    .ruleBtn {
+      position: fixed;
+      left: 0vw;
+      top: 4vw;
+      border-radius: 0 1.33vw 1.33vw 0;
+      background: rgba(0, 0, 0, .5);
+      color: #fff;
+      font-size: 4vw;
+      text-align: center;
+      width: 20vw;
+      height: 12vw;
+      line-height: 12vw;
+    }
+
+    .ruleModel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .8);
+      padding: 4vw;
+      box-sizing: border-box;
+      display: none;
+    }
+
+    .ruleModel>ul {
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #000;
+      padding: 4vw 4vw 0 4vw;
+      height: 12vw;
+      z-index: 1;
+    }
+
+    .ruleModel>ul li {
+      width: 45%;
+      height: 100%;
+      float: left;
+      text-align: center;
+      line-height: 8vw;
+      color: #fff;
+    }
+
+    .ruleModel>ul li:nth-child(3) {
+      width: 10%;
+      height: 100%;
+      float: right;
+      text-align: center;
+      line-height: 8vw;
+      color: #fff;
+    }
+
+    .ruleModel>ul li span {
+      display: inline-block;
+      padding: 0 4vw;
+      line-height: 8vw;
+    }
+
+    .ruleModel>ul li span.done {
+      border-bottom: 2px solid #d12329;
+      color: #d12329;
+      font-weight: 700;
+    }
+
+    .ruleModel .ruleContent>div {
+      padding: 4vw 0 0 0;
+      color: #fff;
+      font-size: 3.73vw;
+    }
+    .ruleContent{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      padding: 12vw 4vw;
+      box-sizing: border-box;
+      overflow: auto;
+    }
+
+    .ruleModel>div li>span {
+      height: 8vw;
+      font-weight: 700;
+      padding: 0 8vw 0 0;
+      line-height: 8vw;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 1);
+    }
+
+    .ruleModel>div p {
+      line-height: 5.33vw;
+    }
+
+
+    .myPrize{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      padding: 12vw 4vw;
+      box-sizing: border-box;
+      overflow: auto;
+      display: none;
+    }
+    .myPrize > ul > li {
+      margin-top: 4vw;
+      border-radius: 1.33vw;
+      box-shadow: 0 0 5px 0 #fff;
+      color: #000;
+      background: #fff;
+      overflow: hidden;
+    }
+    .myPrize >ul .imgBox {
+      width: 100%;
+      height: 30vw;
+      background: #f91;
+      background: url('./images/jiangpin.jpg') 0 0 no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+    .myPrize >ul .imgBox>span {
+      position: absolute;
+      right: 2.66vw;
+      top: 2.66vw;
+      line-height: 6vw;
+      padding: 0 4vw;
+      border-radius: 4vw;
+      background: rgba(0, 0, 0, .8);
+      color: #fff;
+      font-size: 3.73vw;
+    }
+
+    .myPrize >ul .title{
+      padding: 4vw;
+      font-size: 4vw;
+    }
+
+    .myPrize >ul .title h4 {
+      line-height: 6vw;
+      font-weight: 700;
+      box-sizing: border-box;
+    }
+
+    .myPrize >ul .title p {
+      line-height: 6vw;
+      font-weight: 700;
+      box-sizing: border-box;
+      margin: 0 auto;
+    }
+
+  </style>
 </head>
 
 <body>
- <div id="main">
-  <h2>
-   <img src="./images/title.png" alt="">
-   <p>已有<span>1314</span>人参与</p>
-  </h2>
-  <div class="msg"><span>刮开图层部分看看</span><div class="ScratchTitle"></div></div>
-  <div class="demoOuter">
-  <div class="demo">
-   <canvas id="canvasBotm"></canvas>
-   <canvas id="canvasTop"></canvas>
+  <div id="main">
+    <h2>
+      <img src="./images/title.png" alt="">
+      <p>已有<span>1314</span>人参与</p>
+    </h2>
+    <div class="msg"><span>刮开图层部分看看</span>
+      <div class="ScratchTitle"></div>
+    </div>
+    <div class="demoOuter">
+      <div class="demo">
+        <canvas id="canvasBotm"></canvas>
+        <canvas id="canvasTop"></canvas>
+      </div>
+    </div>
+    <p class="bottomContent">您还有<span>3次</span>机会<a href="javascript:void(0)"
+        onClick="window.location.reload()">再来一次</a>
+    </p>
   </div>
- </div>
-  <p class="bottomContent">您还有<span>3次</span>机会<a href="javascript:void(0)" onClick="window.location.reload()">再来一次</a></p>
- </div>
+  <!-- 规则说明按钮 -->
+  <div class="ruleBtn">规则说明</div>
+  <!-- 弹出层页面（规则&&奖品信息） -->
+  <div class="ruleModel">
+    <ul>
+      <li class="tabTag"><span class="done">规则说明</span></li>
+      <li class="tabTag"><span>我的奖品</span></li>
+      <li id="close"><span><i class="iconfont">&#xe605;</i></span></li>
+    </ul>
+    <!-- 规则说明 -->
+    <div class="ruleContent">
+      <div>
+        <h3><span>活动奖品</span></h3>
+        <p>活动奖品活动奖
+          品活动奖品活动
+          奖品活动奖品</p>
+      </div>
+      <div>
+        <h3><span>活动时间</span></h3>
+        <p>活动奖品活动奖
+          品活动奖品活动
+          奖品活动奖品</p>
+      </div>
+      <div>
+        <h3><span>主办单位</span></h3>
+        <p>活动奖品活动奖
+          品活动奖品活动
+          奖品活动奖品</p>
+      </div>
+      <div>
+        <h3><span>技术支持</span></h3>
+        <p>活动奖品活动奖
+          品活动奖品活动
+          奖品活动奖品</p>
+      </div>
+      <div>
+        <h3><span>活动说明</span></h3>
+        <p>活动奖品活动奖
+          品活动奖品活动
+          奖品活动奖品</p>
+      </div>
+      <div>
+        <h3><span>活动规则</span></h3>
+        <p>活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品活动奖品</p>
+      </div>
+    </div>
+    <div class="myPrize">
+      <ul>
+        <li>
+          <div class="imgBox"><span>一等奖</span></div>
+          <div class="title">
+          <h4>奖品标题内容</h4>
+          <p>有效期限：2019.01 至 2020.08</p>
+        </div>
+        </li>
+        <li>
+          <div class="imgBox"><span>一等奖</span></div>
+          <div class="title">
+          <h4>奖品标题内容</h4>
+          <p>有效期限：2019.01 至 2020.08</p>
+        </div>
+        </li>
+        <li>
+          <div class="imgBox"><span>一等奖</span></div>
+          <div class="title">
+          <h4>奖品标题内容</h4>
+          <p>有效期限：2019.01 至 2020.08</p>
+        </div>
+        </li>
+        <li>
+          <div class="imgBox"><span>一等奖</span></div>
+          <div class="title">
+          <h4>奖品标题内容</h4>
+          <p>有效期限：2019.01 至 2020.08</p>
+        </div>
+        </li>
+        <li>
+          <div class="imgBox"><span>一等奖</span></div>
+          <div class="title">
+          <h4>奖品标题内容</h4>
+          <p>有效期限：2019.01 至 2020.08</p>
+        </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 
- <script type="text/javascript">
 
-  //禁用页面的鼠标选中拖动的事件 
-  var bodyStyle = document.body.style;
-  bodyStyle.mozUserSelect = 'none';
-  bodyStyle.webkitUserSelect = 'none';
+  <script type="text/javascript">
 
-  //定义图片类，获取canvas元素，并设置背景和位置属性 
-  var img = new Image();
-  var innerImg = new Image();
-  var canvas = document.getElementById('canvasTop');
-  var canvasBotm = document.getElementById('canvasBotm');
-  var demo = document.getElementsByClassName('demo')[0];
-  var EraseArea = 0;
-  var AllArea = 0;
-  // 表面层设置透明背景
-  canvas.style.backgroundColor = 'transparent';
-  canvas.style.width = '86.67vw';
-  canvas.style.height = '30vw';
-  AllArea = demo.offsetWidth*demo.offsetHeight
-  canvasBotm.style.backgroundColor = '#f3f3f3'; //验证码背景色 
-  canvasBotm.style.width = '86.67vw';
-  canvasBotm.style.height = '30vw';
-  // 设置canvas画布的大小等于canvas元素的大小，这里不设置相等会导致在擦除涂层时出现偏差
-  canvas.width = demo.offsetWidth
-  canvas.height = demo.offsetHeight
-  canvasBotm.width = demo.offsetWidth
-  canvasBotm.height = demo.offsetHeight
+    //禁用页面的鼠标选中拖动的事件 
+    var bodyStyle = document.body.style;
+    bodyStyle.mozUserSelect = 'none';
+    bodyStyle.webkitUserSelect = 'none';
 
-  // 设置底层的刮奖后视觉效果（随机展示奖项图片）
-  var num = Math.floor(Math.random() * 12);
-  img.src = "./images/award" + num + ".jpg";
-  // 设置表层的视觉效果
-  innerImg.src = "./images/guawo.jpg"
+    //定义图片类，获取canvas元素，并设置背景和位置属性 
+    var img = new Image();
+    var innerImg = new Image();
+    var canvas = document.getElementById('canvasTop');
+    var canvasBotm = document.getElementById('canvasBotm');
+    var demo = document.getElementsByClassName('demo')[0];
+    var EraseArea = 0;
+    var AllArea = 0;
+    // 表面层设置透明背景
+    canvas.style.backgroundColor = 'transparent';
+    canvas.style.width = '86.67vw';
+    canvas.style.height = '30vw';
+    AllArea = demo.offsetWidth * demo.offsetHeight
+    canvasBotm.style.backgroundColor = '#f3f3f3'; //验证码背景色 
+    canvasBotm.style.width = '86.67vw';
+    canvasBotm.style.height = '30vw';
+    // 设置canvas画布的大小等于canvas元素的大小，这里不设置相等会导致在擦除涂层时出现偏差
+    canvas.width = demo.offsetWidth
+    canvas.height = demo.offsetHeight
+    canvasBotm.width = demo.offsetWidth
+    canvasBotm.height = demo.offsetHeight
+
+    // 设置底层的刮奖后视觉效果（随机展示奖项图片）
+    var num = Math.floor(Math.random() * 12);
+    img.src = "./images/award" + num + ".jpg";
+    // 设置表层的视觉效果
+    innerImg.src = "./images/guawo.jpg"
 
 
-  img.addEventListener('load', function (e) {
-   var ctx;
-   var w = canvas.width,h = canvas.height;
-   // 获取canvas区域距离可视区域顶部和左侧的距离（为了后面计算擦除点在画布中的坐标）
-   var offsetX = demo.offsetLeft,
-    offsetY = demo.offsetTop;
-   var mousedown = false;
-   //函数layer()用来绘制最上面一层图案，可以设置纯色 
-   function layer(ctx) {
-    // 绘制图片图案
-    ctx.drawImage(innerImg,0,0,w,h)
-    // 绘制纯色图案
-    // ctx.fillStyle = 'gray';
-    // ctx.rect(0, 0, w, h);
-    // ctx.fill();
-   }
-   function layerBotm(ctxBotm) {
-    ctxBotm.fillStyle = 'gray';
-    ctxBotm.fillRect(0, 0, w, h);
-   }
-   //定义了按下事件 
-   function eventDown(e) {
-    e.preventDefault();
-    mousedown = true;
-   }
-   //定义了松开事件 
-   function eventUp(e) {
-    e.preventDefault();
-    mousedown = false;
-    // 刮去的面积除以总面积大于2（由于擦除的圆用许多重叠部分）清除全部
-    if (EraseArea/AllArea>2) {
-     ctx.clearRect(0, 0, w, h);
+    img.addEventListener('load', function (e) {
+      var ctx;
+      var w = canvas.width, h = canvas.height;
+      // 获取canvas区域距离可视区域顶部和左侧的距离（为了后面计算擦除点在画布中的坐标）
+      var offsetX = demo.offsetLeft,
+        offsetY = demo.offsetTop;
+      var mousedown = false;
+      //函数layer()用来绘制最上面一层图案，可以设置纯色 
+      function layer(ctx) {
+        // 绘制图片图案
+        ctx.drawImage(innerImg, 0, 0, w, h)
+        // 绘制纯色图案
+        // ctx.fillStyle = 'gray';
+        // ctx.rect(0, 0, w, h);
+        // ctx.fill();
+      }
+      function layerBotm(ctxBotm) {
+        ctxBotm.fillStyle = 'gray';
+        ctxBotm.fillRect(0, 0, w, h);
+      }
+      //定义了按下事件 
+      function eventDown(e) {
+        e.preventDefault();
+        mousedown = true;
+      }
+      //定义了松开事件 
+      function eventUp(e) {
+        e.preventDefault();
+        mousedown = false;
+        // 刮去的面积除以总面积大于2（由于擦除的圆用许多重叠部分）清除全部
+        if (EraseArea / AllArea > 2) {
+          ctx.clearRect(0, 0, w, h);
+        }
+      }
+      //定义了移动事件 
+      function eventMove(e) {
+        e.preventDefault();
+        if (mousedown) {     //当按下时，获取坐标位移，并通过arc(x, y, 10, 0, Math.PI * 2)来绘制小圆点 
+          if (e.changedTouches) {
+            e = e.changedTouches[e.changedTouches.length - 1];
+          }
+          // 此处页面超出出现滚动条时应该用document.documentElement.scrollTop获取不可以用document.body.scrollTop
+          var x = (e.clientX + document.documentElement.scrollLeft || e.pageX) - offsetX || 0,
+            y = (e.clientY + document.documentElement.scrollTop || e.pageY) - offsetY || 0;
+          with (ctx) {
+            // 计算累计刮开的面积（不准确）
+            EraseArea += Math.PI * 10 * 10
+            beginPath()
+            arc(x, y, 10, 0, Math.PI * 2);
+            fill();
+          }
+        }
+      }
+
+      //通过canvas调用以上函数，绘制图形，并且侦听触控及鼠标事件，调用相应的函数 
+      canvasBotm.style.background = 'url(' + img.src + ') 0 0 no-repeat';
+      canvasBotm.style.backgroundSize = '100% 100%';
+
+      ctxBotm = canvas.getContext("2d");
+      ctx = canvasBotm.getContext("2d");
+      ctx.font = "50px Arial";
+
+      //实习字体 
+      // 绘制中奖区域文字内容
+      // ctx.fillStyle = '#fff';
+      // ctx.textAlign = "center";
+      // ctx.textBaseline = "middle";
+      // ctx.fillText('一等奖', canvas.width/2, canvas.height/2);
+
+
+      ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'transparent';
+      ctx.fillRect(0, 0, w, h);
+
+      layerBotm(ctxBotm);
+      layer(ctx);
+      // 原有内容中与新图形不重叠的部分会被保留
+      ctx.globalCompositeOperation = 'destination-out';
+
+      canvas.addEventListener('touchstart', eventDown);
+      canvas.addEventListener('touchend', eventUp);
+      canvas.addEventListener('touchmove', eventMove);
+      canvas.addEventListener('mousedown', eventDown);
+      canvas.addEventListener('mouseup', eventUp);
+      canvas.addEventListener('mousemove', eventMove);
+    }); 
+    // 页面操作js
+    var closeBtn = document.getElementById('close');
+    var ruleModel = document.getElementsByClassName('ruleModel')[0];
+    var ruleContent = document.getElementsByClassName('ruleContent')[0];
+    var myPrize = document.getElementsByClassName('myPrize')[0];
+    var ruleBtn = document.getElementsByClassName('ruleBtn')[0];
+    var tabTags = document.getElementsByClassName('tabTag');
+    closeBtn.onclick = function () {
+      ruleModel.style.display = 'none';
     }
-   }
-   //定义了移动事件 
-   function eventMove(e) {
-    e.preventDefault();
-    if (mousedown) {     //当按下时，获取坐标位移，并通过arc(x, y, 10, 0, Math.PI * 2)来绘制小圆点 
-     if (e.changedTouches) {
-      e = e.changedTouches[e.changedTouches.length - 1];
-     }
-     // 此处页面超出出现滚动条时应该用document.documentElement.scrollTop获取不可以用document.body.scrollTop
-     var x = (e.clientX + document.documentElement.scrollLeft || e.pageX) - offsetX || 0,
-      y = (e.clientY + document.documentElement.scrollTop || e.pageY) - offsetY || 0;
-     with (ctx) {
-      // 计算累计刮开的面积（不准确）
-      EraseArea += Math.PI*10*10
-      beginPath()
-      arc(x, y, 10, 0, Math.PI * 2);
-      fill();
-     }
+    ruleBtn.onclick = function () {
+      ruleModel.style.display = 'block';
     }
-   }
+    for (let i=0;i<tabTags.length;i++) {
 
-   //通过canvas调用以上函数，绘制图形，并且侦听触控及鼠标事件，调用相应的函数 
-   canvasBotm.style.background='url('+img.src+') 0 0 no-repeat'; 
-   canvasBotm.style.backgroundSize='100% 100%'; 
-
-   ctxBotm = canvas.getContext("2d");
-   ctx = canvasBotm.getContext("2d");
-   ctx.font = "50px Arial";
-
-   //实习字体 
-   // 绘制中奖区域文字内容
-   // ctx.fillStyle = '#fff';
-   // ctx.textAlign = "center";
-   // ctx.textBaseline = "middle";
-   // ctx.fillText('一等奖', canvas.width/2, canvas.height/2);
-
-
-   ctx = canvas.getContext('2d');
-   ctx.fillStyle = 'transparent';
-   ctx.fillRect(0, 0, w, h);
-
-   layerBotm(ctxBotm);
-   layer(ctx);
-   // 原有内容中与新图形不重叠的部分会被保留
-   ctx.globalCompositeOperation = 'destination-out';
-
-   canvas.addEventListener('touchstart', eventDown);
-   canvas.addEventListener('touchend', eventUp);
-   canvas.addEventListener('touchmove', eventMove);
-   canvas.addEventListener('mousedown', eventDown);
-   canvas.addEventListener('mouseup', eventUp);
-   canvas.addEventListener('mousemove', eventMove);
-  }); 
- </script>
+      tabTags[i].onclick = function () {
+        for (let i=0;i<tabTags.length;i++) {
+          tabTags[i].children[0].classList.remove('done');
+        }
+      if (i == 0) {
+        myPrize.style.display = 'none'
+        ruleContent.style.display = 'block';
+      } else if (i == 1) {
+        myPrize.style.display = 'block'
+        ruleContent.style.display = 'none';
+      }
+      this.children[0].classList.add('done');
+    }
+    }
+  </script>
 </body>
 
 </html>
